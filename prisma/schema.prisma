@@ -14,7 +14,7 @@ datasource db {
 }
 
 model Customers {
-  id          Int      @id @default(autoincrement())
+  id          String   @id @default(uuid())
   name        String
   email       String   @unique
   phoneNumber String   @unique
@@ -23,7 +23,7 @@ model Customers {
 }
 
 model Resturants {
-  id        Int         @id @default(autoincrement())
+  id        String      @id @default(uuid())
   name      String      @unique
   location  String
   menuitems MenuItems[]
@@ -31,9 +31,9 @@ model Resturants {
 }
 
 model MenuItems {
-  id          Int          @id @default(autoincrement())
+  id          String       @id @default(uuid())
   resturants  Resturants   @relation(fields: [resturentId], references: [id])
-  resturentId Int
+  resturentId String
   name        String
   price       Decimal
   isAvailable Boolean      @default(true)
@@ -41,11 +41,11 @@ model MenuItems {
 }
 
 model Orders {
-  id          Int          @id @default(autoincrement())
+  id          String       @id @default(uuid())
   customers   Customers    @relation(fields: [customerId], references: [id])
-  customerId  Int
+  customerId  String
   resturants  Resturants   @relation(fields: [resturentId], references: [id])
-  resturentId Int
+  resturentId String
   status      OrderStatus  @default(PLACED)
   totalPrice  Decimal
   orderTime   DateTime     @default(now())
@@ -55,9 +55,9 @@ model Orders {
 model OrderItems {
   id         String    @id
   order      Orders    @relation(fields: [orderId], references: [id])
-  orderId    Int
+  orderId    String
   menuItem   MenuItems @relation(fields: [menuItemId], references: [id])
-  menuItemId Int
+  menuItemId String
   quantity   Int
 }
 
